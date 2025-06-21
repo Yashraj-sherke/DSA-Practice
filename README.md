@@ -24,9 +24,14 @@
 - ✅ Two Sum / 3Sum / 4Sum
 - ✅ Subarray with given sum (positive/negative)
 - ✅ Maximum sum subarray (Kadane’s)
-- ✅ Move zeroes to end / Rotate array
+- - ✅ Move zeroes to end / Rotate array
 - ✅ Longest consecutive sequence
 - ✅ Merge intervals
 - ✅ Stock buy and sell (1, 2, infinite transactions)
 
----
+
+  # Array
+  [3085. Minimum Deletions to Make String K-Special0](https://leetcode.com/problems/minimum-deletions-to-make-string-k-special/description/?envType=daily-question&envId=2025-06-21)
+
+
+
