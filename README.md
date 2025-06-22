@@ -33,5 +33,12 @@
   # Array
   [3085. Minimum Deletions to Make String K-Special0](https://leetcode.com/problems/minimum-deletions-to-make-string-k-special/description/?envType=daily-question&envId=2025-06-21)
 
+  # String
+
+  #Easy
+  [2138. Divide a String Into Groups of Size k](https://leetcode.com/problems/divide-a-string-into-groups-of-size-k/description/?envType=daily-question&envId=2025-06-22)
+
+
+
 
 
