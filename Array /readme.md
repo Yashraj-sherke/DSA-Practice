@@ -15,6 +15,21 @@ A curated list of essential array problems for DSA placement preparation. Practi
 - Remove duplicates (Sorted Array - Inplace)
 - Remove duplicates (Unsorted - Using Set)
 - Count frequency of an element
+- Find the second largest element in the array
+- Find the second smallest element in the array
+- Check if an array is palindrome
+- Find the difference between sum of even-indexed and odd-indexed elements
+- Rotate array to left by one position
+- Rotate array to right by one position
+- Check if all elements are unique
+- Find the maximum and minimum elements in a single traversal
+- Count total number of positive, negative, and zero elements
+- Calculate average of array elements
+- Check if array contains duplicate elements
+- Count number of occurrences of a particular element
+- Print all distinct elements of the array
+- Merge two unsorted arrays into a single sorted array
+- Find common elements in three sorted arrays
 
 ---
 
