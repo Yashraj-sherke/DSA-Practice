@@ -17,6 +17,7 @@ A curated list of essential array problems for DSA placement preparation. Practi
 - Count frequency of an element
 - Find the second largest element in the array
 - [Find the second smallest element in the array](https://www.geeksforgeeks.org/problems/find-the-smallest-and-second-smallest-element-in-an-array3226/1)
+- [Find The missing Number](https://www.geeksforgeeks.org/problems/missing-number-in-array1416/1)
 - Check if an array is palindrome
 - Find the difference between sum of even-indexed and odd-indexed elements
 - Rotate array to left by one position
