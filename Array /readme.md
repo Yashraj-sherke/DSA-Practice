@@ -18,18 +18,18 @@ A curated list of essential array problems for DSA placement preparation. Practi
 - Find the second largest element in the array
 - [Find the second smallest element in the array](https://www.geeksforgeeks.org/problems/find-the-smallest-and-second-smallest-element-in-an-array3226/1)
 - [Find The missing Number](https://www.geeksforgeeks.org/problems/missing-number-in-array1416/1)
-- Check if an array is palindrome
-- Find the difference between sum of even-indexed and odd-indexed elements
-- Rotate array to left by one position
+- [Check if an array is palindrome](https://www.geeksforgeeks.org/program-to-check-if-an-array-is-palindrome-or-not/)
+- [Find the difference between sum of even-indexed and odd-indexed elements](https://www.geeksforgeeks.org/dsa/absolute-difference-between-sum-of-even-elements-at-even-indices-odd-elements-at-odd-indices-in-given-array/)
+- [Rotate array to left by one position](https://www.geeksforgeeks.org/dsa/array-rotation/)
 - Rotate array to right by one position
-- Check if all elements are unique
-- Find the maximum and minimum elements in a single traversal
-- Count total number of positive, negative, and zero elements
+- [Check if all elements are unique](https://www.geeksforgeeks.org/dsa/check-if-all-array-elements-are-distinct/)
+- [Find the maximum and minimum elements in a single traversal](https://www.geeksforgeeks.org/dsa/maximum-and-minimum-in-an-array/)
+- [Count total number of positive, negative, and zero elements](https://www.geeksforgeeks.org/c/c-program-to-count-positive-and-negative-numbers-in-an-array/)
 - Calculate average of array elements
-- Check if array contains duplicate elements
-- Count number of occurrences of a particular element
-- Print all distinct elements of the array
-- Merge two unsorted arrays into a single sorted array
+- [Check if array contains duplicate elements](https://leetcode.com/problems/contains-duplicate/submissions/1688712522/)
+- [Count number of occurrences of a particular element](https://www.geeksforgeeks.org/dsa/count-number-of-occurrences-or-frequency-in-a-sorted-array/#naive-approach-using-linear-search-on-time-and-o1-space)
+- [Print all distinct elements of the array](https://www.geeksforgeeks.org/dsa/print-distinct-elements-given-integer-array/)
+- [Merge two unsorted arrays into a single sorted array](https://www.geeksforgeeks.org/dsa/merging-two-unsorted-arrays-sorted-order/)
 - Find common elements in three sorted arrays
 
 ---
