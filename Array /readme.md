@@ -37,7 +37,7 @@ A curated list of essential array problems for DSA placement preparation. Practi
 ## 📌 2. Two Pointers & Swapping
 - [Reverse the array in-place](https://www.geeksforgeeks.org/problems/reverse-an-array/1)
 - [Move all zeros to end](https://leetcode.com/problems/move-zeroes/submissions/1689223994/)
-- Segregate 0s and 1s in array
+- [Segregate 0s and 1s in array](https://www.geeksforgeeks.org/problems/segregate-0s-and-1s5106/1)
 - Find second largest element
 - Swap first and last element
 - Check if array is palindrome
