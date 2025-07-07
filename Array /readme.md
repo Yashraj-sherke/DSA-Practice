@@ -31,6 +31,8 @@ A curated list of essential array problems for DSA placement preparation. Practi
 - [Print all distinct elements of the array](https://www.geeksforgeeks.org/dsa/print-distinct-elements-given-integer-array/)
 - [Merge two unsorted arrays into a single sorted array](https://www.geeksforgeeks.org/dsa/merging-two-unsorted-arrays-sorted-order/)
 - Find common elements in three sorted arrays
+- [Max Consecutive Ones](https://leetcode.com/problems/max-consecutive-ones/description/)
+
 
 ---
 
@@ -39,11 +41,11 @@ A curated list of essential array problems for DSA placement preparation. Practi
 - [Move all zeros to end](https://leetcode.com/problems/move-zeroes/submissions/1689223994/)
 - [Segregate 0s and 1s in array](https://www.geeksforgeeks.org/problems/segregate-0s-and-1s5106/1)
 - Find second largest element
-- Swap first and last element
-- Check if array is palindrome
-- Left Rotate the array by 1
-- Right Rotate the array by 1
-- Cyclically rotate by k places
+- [Swap first and last element](https://stackoverflow.com/questions/65450651/swapping-first-array-element-with-last-second-with-second-last-and-so-on)
+- [Check if array is palindrome](https://www.geeksforgeeks.org/problems/perfect-arrays4645/1)
+- [Left Rotate the array by 1](https://www.geeksforgeeks.org/problems/cyclically-rotate-an-array-by-one2614/1)
+- [Right Rotate the array by 1](https://www.geeksforgeeks.org/problems/cyclically-rotate-an-array-by-one2614/1)
+- [Cyclically rotate by k places](https://prepinsta.com/program-to-cyclically-rotate-an-array-by-k-positions/)
 - Maximum product of two numbers
 
 ---
