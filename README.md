@@ -55,71 +55,80 @@ These questions are frequently asked in companies like **TCS, Infosys, Wipro, Ac
 
 ---
 
-## 📍 1. Basic & Must-Know Array Problems
 
-1. Find the largest and smallest element in an array *(TCS, Infosys - very common)*
-2. Reverse the array (in-place) *(Wipro, TCS - often asked)*
-3. Check if array is sorted *(Infosys, Accenture - common check)*
-4. Find second largest and second smallest element *(Wipro, TCS - multiple times)*
-5. Search element in array (Linear & Binary Search) *(Capgemini, TCS - basic question)*
-6. Rotate array by one position (left and right) *(Wipro, TCS - basic level)*
-7. Count frequency of an element *(TCS, Infosys - common)*
-8. Check if an array is palindrome *(TCS, Wipro - sometimes asked)*
-9. Remove duplicates from sorted array (in-place) *(Accenture, TCS - common)*
-10. Merge two unsorted arrays and sort them *(Infosys, Accenture - moderate)*
-
----
-
-## 📍 2. Two Pointers & Swapping Techniques
-
-1. Move all zeros to the end (preserve order) *(TCS NQT, Infosys - frequent)*
-2. Segregate 0s and 1s in array *(Wipro, TCS - easy-medium)*
-3. Sort an array of 0s, 1s, and 2s (Dutch National Flag) *(Amazon, Microsoft, Accenture - very common)*
-4. Find pairs with given sum *(TCS Digital, Infosys - common)*
-5. Check if array contains duplicates *(Capgemini, TCS - basic)*
-6. Maximum Product of two numbers in array *(Amazon, Accenture - moderate)*
-7. Reverse subarrays or part of array using two-pointers *(Microsoft, TCS - moderate)*
+| No. | Question | Asked In Companies |
+|-----|----------|--------------------|
+| 1 | Find the largest and smallest element in an array | TCS, Infosys - very common |
+| 2 | Reverse the array (in-place) | Wipro, TCS - often asked |
+| 3 | Check if array is sorted | Infosys, Accenture - common check |
+| 4 | Find second largest and second smallest element | Wipro, TCS - multiple times |
+| 5 | Search element in array (Linear & Binary Search) | Capgemini, TCS - basic question |
+| 6 | Rotate array by one position (left and right) | Wipro, TCS - basic level |
+| 7 | Count frequency of an element | TCS, Infosys - common |
+| 8 | Check if an array is palindrome | TCS, Wipro - sometimes asked |
+| 9 | Remove duplicates from sorted array (in-place) | Accenture, TCS - common |
+| 10 | Merge two unsorted arrays and sort them | Infosys, Accenture - moderate |
 
 ---
 
-## 📍 3. Sorting & Searching Based
+## 📌 2. Two Pointers & Swapping Techniques
 
-1. Find missing number in range 1 to N *(TCS, Infosys, Wipro - very common)*
-2. Find duplicate number in array *(Accenture, TCS NQT - common)*
-3. Intersection of two arrays (with/without duplicates) *(Infosys, Capgemini - moderate)*
-4. Union of two arrays *(TCS, Wipro - sometimes)*
-5. Find majority element (> n/2 times) *(Amazon, Microsoft - frequently asked)*
-6. K-th smallest/largest element *(Infosys, Amazon - medium level)*
-7. Merge two sorted arrays without extra space *(Microsoft, TCS - challenging)*
-8. Median of two sorted arrays *(Amazon, Microsoft - advanced)*
-9. Check if two arrays are equal (after sorting) *(Infosys, TCS - occasional)*
-
----
-
-## 📍 4. Prefix Sum, Subarrays & Sliding Window
-
-1. Maximum sum subarray of size k *(Wipro, TCS - common)*
-2. Longest subarray with given sum (positive & negative) *(Infosys, TCS Digital - moderate)*
-3. Subarray with sum zero exists or not *(Amazon, Accenture - tricky)*
-4. Kadane's Algorithm (Maximum Subarray Sum) *(Microsoft, Amazon - often asked)*
-5. Count subarrays with sum divisible by K *(Amazon, Microsoft - advanced)*
-6. Maximum difference between two elements *(TCS NQT, Wipro - basic-medium)*
-7. Maximum consecutive 1s in binary array *(TCS, Infosys - basic)*
+| No. | Question | Asked In Companies |
+|-----|----------|--------------------|
+| 1 | Move all zeros to the end (preserve order) | TCS NQT, Infosys - frequent |
+| 2 | Segregate 0s and 1s in array | Wipro, TCS - easy-medium |
+| 3 | Sort an array of 0s, 1s, and 2s (Dutch National Flag) | Amazon, Microsoft, Accenture - very common |
+| 4 | Find pairs with given sum | TCS Digital, Infosys - common |
+| 5 | Check if array contains duplicates | Capgemini, TCS - basic |
+| 6 | Maximum Product of two numbers in array | Amazon, Accenture - moderate |
+| 7 | Reverse subarrays or part of array using two-pointers | Microsoft, TCS - moderate |
 
 ---
 
-## 📍 5. Advanced Array Challenges
+## 📌 3. Sorting & Searching Based
 
-1. Rotate matrix by 90 degrees *(Amazon, Microsoft, Accenture - frequent)*
-2. Product of array except self (without division) *(Amazon, Microsoft - advanced)*
-3. Minimum number of jumps to reach end *(TCS Digital, Wipro - moderate)*
-4. Trapping Rain Water Problem *(Amazon, Microsoft - classic)*
-5. Best Time to Buy and Sell Stock (Max Profit) *(Amazon, Microsoft, Infosys - common)*
-6. Longest Mountain in Array *(Amazon, Microsoft - moderate)*
-7. Find missing and repeating number *(TCS, Wipro - common)*
-8. Leaders in an array (greater elements on right) *(TCS, Infosys - basic)*
-9. Rearrange array in alternating max/min form *(Microsoft, Amazon - advanced)*
-10. Count inversion pairs *(Amazon, Microsoft - hard)*
+| No. | Question | Asked In Companies |
+|-----|----------|--------------------|
+| 1 | Find missing number in range 1 to N | TCS, Infosys, Wipro - very common |
+| 2 | Find duplicate number in array | Accenture, TCS NQT - common |
+| 3 | Intersection of two arrays | Infosys, Capgemini - moderate |
+| 4 | Union of two arrays | TCS, Wipro - sometimes |
+| 5 | Find majority element (> n/2 times) | Amazon, Microsoft - frequently asked |
+| 6 | K-th smallest/largest element | Infosys, Amazon - medium level |
+| 7 | Merge two sorted arrays without extra space | Microsoft, TCS - challenging |
+| 8 | Median of two sorted arrays | Amazon, Microsoft - advanced |
+| 9 | Check if two arrays are equal (after sorting) | Infosys, TCS - occasional |
+
+---
+
+## 📌 4. Prefix Sum, Subarrays & Sliding Window
+
+| No. | Question | Asked In Companies |
+|-----|----------|--------------------|
+| 1 | Maximum sum subarray of size k | Wipro, TCS - common |
+| 2 | Longest subarray with given sum | Infosys, TCS Digital - moderate |
+| 3 | Subarray with sum zero exists or not | Amazon, Accenture - tricky |
+| 4 | Kadane's Algorithm (Maximum Subarray Sum) | Microsoft, Amazon - often asked |
+| 5 | Count subarrays with sum divisible by K | Amazon, Microsoft - advanced |
+| 6 | Maximum difference between two elements | TCS NQT, Wipro - basic-medium |
+| 7 | Maximum consecutive 1s in binary array | TCS, Infosys - basic |
+
+---
+
+## 📌 5. Advanced Array Challenges
+
+| No. | Question | Asked In Companies |
+|-----|----------|--------------------|
+| 1 | Rotate matrix by 90 degrees | Amazon, Microsoft, Accenture - frequent |
+| 2 | Product of array except self (without division) | Amazon, Microsoft - advanced |
+| 3 | Minimum number of jumps to reach end | TCS Digital, Wipro - moderate |
+| 4 | Trapping Rain Water Problem | Amazon, Microsoft - classic |
+| 5 | Best Time to Buy and Sell Stock (Max Profit) | Amazon, Microsoft, Infosys - common |
+| 6 | Longest Mountain in Array | Amazon, Microsoft - moderate |
+| 7 | Find missing and repeating number | TCS, Wipro - common |
+| 8 | Leaders in an array (greater elements on right) | TCS, Infosys - basic |
+| 9 | Rearrange array in alternating max/min form | Microsoft, Amazon - advanced |
+| 10 | Count inversion pairs | Amazon, Microsoft - hard |
   ## Easy
   [Second Largest](https://www.geeksforgeeks.org/problems/second-largest3735/1)
   
