@@ -51,10 +51,10 @@ A curated list of essential array problems for DSA placement preparation. Practi
 ---
 
 ## 📌 3. Sorting & Searching Based
-- Sort an array of 0s, 1s and 2s (Dutch National Flag)
-- Find missing number in 1 to N
-- Find duplicate number
-- Intersection of two arrays
+- [Sort an array of 0s, 1s and 2s (Dutch National Flag)](https://www.geeksforgeeks.org/problems/sort-an-array-of-0s-1s-and-2s4231/1)
+- [Find missing number in 1 to N](https://leetcode.com/problems/missing-number/)
+- [Find duplicate number](https://www.geeksforgeeks.org/problems/find-duplicates-in-an-array/1)
+- [Intersection of two arrays](https://www.geeksforgeeks.org/problems/intersection-of-two-arrays-with-duplicate-elements/1)
 - Union of two arrays
 - Find majority element (> n/2 times)
 - Find k-th smallest element (Sorting)
