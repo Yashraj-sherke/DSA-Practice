@@ -55,8 +55,8 @@ A curated list of essential array problems for DSA placement preparation. Practi
 - [Find missing number in 1 to N](https://leetcode.com/problems/missing-number/)
 - [Find duplicate number](https://www.geeksforgeeks.org/problems/find-duplicates-in-an-array/1)
 - [Intersection of two arrays](https://www.geeksforgeeks.org/problems/intersection-of-two-arrays-with-duplicate-elements/1)
-- Union of two arrays
-- Find majority element (> n/2 times)
+- [Union of two arrays](https://www.geeksforgeeks.org/problems/union-of-two-arrays3538/1)
+- [Find majority element (> n/2 times)](https://www.geeksforgeeks.org/problems/majority-element-1587115620/1)
 - Find k-th smallest element (Sorting)
 - Merge two sorted arrays
 - Find median of two sorted arrays
