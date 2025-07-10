@@ -142,6 +142,53 @@ These questions are frequently asked in companies like **TCS, Infosys, Wipro, Ac
   [2138. Divide a String Into Groups of Size k](https://leetcode.com/problems/divide-a-string-into-groups-of-size-k/description/?envType=daily-question&envId=2025-06-22)
 
 
+  # 📚 DSA Revision Sheet
+
+A curated list of important Data Structures & Algorithms problems with brief explanations, solutions, and links to practice.
+
+---
+
+## Table of Contents
+1. [Arrays](#arrays)
+2. [Strings](#strings)
+3. [Linked List](#linked-list)
+4. [Stacks & Queues](#stacks--queues)
+5. [Trees](#trees)
+6. [Graphs](#graphs)
+7. [Dynamic Programming](#dynamic-programming)
+8. [Greedy Algorithms](#greedy-algorithms)
+9. [Miscellaneous](#miscellaneous)
+
+---
+
+## Arrays
+
+| #  | Problem | Approach | Solution | Link |
+|----|---------|----------|----------|------|
+| 1  | Two Sum | Hash Map | [Code](./solutions/two-sum.cpp) | [Leetcode](https://leetcode.com/problems/two-sum/) |
+| 2  | Kadane's Algo | Prefix Sum | [Code](./solutions/kadane.cpp) | [GFG](https://www.geeksforgeeks.org/kadanes-algorithm/) |
+
+---
+
+## Strings
+
+| #  | Problem | Approach | Solution | Link |
+|----|---------|----------|----------|------|
+| 1  | Longest Palindromic Substring | DP / Expand Around Center | [Code](./solutions/longest-palindrome.cpp) | [Leetcode](https://leetcode.com/problems/longest-palindromic-substring/) |
+| 2  | Anagram Check | Sorting / Hash Map | [Code](./solutions/anagram.cpp) | [GFG](https://practice.geeksforgeeks.org/problems/anagram-1587115620/) |
+
+---
+
+## 🔗 Resources
+
+- [Leetcode Top 150](https://leetcode.com/problem-list/top-interview-questions/)
+- [Striver's SDE Sheet](https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/)
+- [GeeksforGeeks DSA](https://practice.geeksforgeeks.org/explore/?page=1)
+
+---
+
+
+
 
 
 
