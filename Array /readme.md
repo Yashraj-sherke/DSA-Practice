@@ -66,6 +66,7 @@ A curated list of essential array problems for DSA placement preparation. Practi
 
 ## 📌 4. Prefix Sum, Subarrays & Sliding Window
 - Maximum sum of subarray of size k (Fixed sliding window)
+- [Two Sum - Pair with given Sum](https://www.geeksforgeeks.org/dsa/check-if-pair-with-given-sum-exists-in-array/#better-approach2-sorting-and-twopointer-technique-onlogn-time-and-o1-space)
 - Longest subarray with given sum
 - Subarray with sum 0 exists or not
 - Kadane’s Algorithm (Maximum Subarray Sum)
