@@ -27,6 +27,9 @@ The **sliding window technique** is a powerful approach for solving problems inv
 - **Example:** Longest substring without repeating characters.
 
 ---
+# Problems
+
+- [Max Sum Subarray of size K](https://www.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1)
 
 ## General Approach
 
@@ -45,4 +48,7 @@ while (j < n) {
     // Update result
     j++;
 }
+
+---
+
 
