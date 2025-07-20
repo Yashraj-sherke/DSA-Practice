@@ -80,6 +80,8 @@ The **variable size sliding window** technique is used when:
 
 # Variable Window Size
 - [ Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/description/)
+- [Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/description/)
+- [904. Fruit Into Baskets](https://leetcode.com/problems/fruit-into-baskets/description/)
 
 
 
