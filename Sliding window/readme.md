@@ -15,44 +15,71 @@ The **sliding window technique** is a powerful approach for solving problems inv
   
 ---
 
-## Types of Sliding Window
-### 1. **Fixed-Size Window**
-- The window size `k` is known.
-- Move the window forward by adding the next element and removing the first element.
-- **Example:** Maximum sum subarray of size `k`.
 
-### 2. **Variable-Size Window**
-- The window size changes dynamically based on a condition.
-- Expand the window (right pointer) and shrink it (left pointer) when necessary.
-- **Example:** Longest substring without repeating characters.
+Sliding Window is a powerful technique to solve subarray/substring problems efficiently.  
+There are **two types** of sliding window approaches:
+1. **Fixed (Static) Size Sliding Window**  
+2. **Variable Size Sliding Window**
+
+---
+
+## **1. Fixed (Static) Size Sliding Window**
+
+### **Concept**
+- The window size is **constant (k)**.
+- Used for problems like:
+  - Maximum/Minimum sum of a subarray of size `k`.
+  - Maximum/Minimum average of `k` elements.
+  - First negative number in every `k` size window.
+
+---
+
+### **General Steps**
+1. Start with two pointers `left` and `right`.
+2. Expand the `right` pointer until the window reaches size `k`.
+3. Process the current window (e.g., update the answer).
+4. Slide the window by incrementing `left` (removing the effect of the leftmost element).
+
+<img width="943" height="786" alt="Screenshot 2025-07-20 222235" src="https://github.com/user-attachments/assets/b878e2e7-3a87-4854-b362-f65b03491e79" />
+
+
+---
+
+
+
+
+# Variable Size Sliding Window Template
+
+## **Concept**
+The **variable size sliding window** technique is used when:
+- We need to find the **longest/shortest subarray/substring** with certain properties.
+- The window expands and contracts dynamically based on conditions.
+
+---
+
+## **General Steps**
+1. Initialize two pointers `left` and `right` to represent the current window.
+2. Use a data structure (like `map`, `set`, `vector`, or just a sum counter) to store the window state.
+3. Expand the `right` pointer step by step.
+4. If the current window violates a condition, **shrink** it by moving the `left` pointer until it satisfies the condition.
+5. Update the **answer** (e.g., max/min length, sum) whenever the condition is satisfied.
+
+<img width="966" height="766" alt="Screenshot 2025-07-20 221951" src="https://github.com/user-attachments/assets/b2484b83-70ea-45e5-b315-b17cb5a2b76f" />
 
 ---
 # Problems
+
+# Static Window Size
 
 - [Max Sum Subarray of size K](https://www.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1)
 - [First negative in every window of size k](https://www.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1)
 - [Count Occurences of Anagrams](https://www.geeksforgeeks.org/problems/count-occurences-of-anagrams5839/1)
 - [ Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/description/)
+- 
 
 
-## General Approach
+# Variable Window Size
+- [ Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/description/)
 
-### **Fixed-Size Window Template**
-```cpp
-
-int i = 0, j = 0;
-while (j < n) {
-    // Add element to window
-
-    while (condition_not_satisfied) {
-        // Shrink window
-        i++;
-    }
-
-    // Update result
-    j++;
-}
-
----
 
 
