@@ -30,6 +30,10 @@ The **sliding window technique** is a powerful approach for solving problems inv
 # Problems
 
 - [Max Sum Subarray of size K](https://www.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1)
+- [First negative in every window of size k](https://www.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1)
+- [Count Occurences of Anagrams](https://www.geeksforgeeks.org/problems/count-occurences-of-anagrams5839/1)
+- [ Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/description/)
+
 
 ## General Approach
 
