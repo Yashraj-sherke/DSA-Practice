@@ -75,7 +75,7 @@ The **variable size sliding window** technique is used when:
 - [First negative in every window of size k](https://www.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1)
 - [Count Occurences of Anagrams](https://www.geeksforgeeks.org/problems/count-occurences-of-anagrams5839/1)
 - [ Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/description/)
-- 
+- [ Binary Subarrays With Sum](https://leetcode.com/problems/binary-subarrays-with-sum/description/)
 
 
 # Variable Window Size
