@@ -1,5 +1,10 @@
 # DSA-Practice
 "Solution of DSA Problem and concept of behind code"
+
+🔴-->Hard
+🟡-->Medium
+🟢-->Easy
+
 ## 📚 Array DSA – Quick Tips & Tricks
 
 ### 🧠 Patterns to Master
