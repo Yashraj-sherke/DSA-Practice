@@ -83,7 +83,8 @@ The **variable size sliding window** technique is used when:
 - [Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/description/)
 - [904. Fruit Into Baskets](https://leetcode.com/problems/fruit-into-baskets/description/)
 - [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/description/)
-- [992. Subarrays with K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/)
+- [992. Subarrays with K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/) 🔴 ⭐
+- [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)  🔴 ⭐
 
 
 
