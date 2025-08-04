@@ -3,3 +3,4 @@
 - [Print GFG n times](https://www.geeksforgeeks.org/problems/print-gfg-n-times/1)
 - [Print N to 1 without loop](https://www.geeksforgeeks.org/problems/print-n-to-1-without-loop/1)
 - [Sum of Natural Numbers](https://www.geeksforgeeks.org/problems/sum-of-series2811/1)
+- [Factorial](https://www.geeksforgeeks.org/problems/factorial5739/1)
