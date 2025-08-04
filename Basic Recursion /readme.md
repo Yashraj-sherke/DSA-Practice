@@ -5,3 +5,4 @@
 - [Sum of Natural Numbers](https://www.geeksforgeeks.org/problems/sum-of-series2811/1)
 - [Factorial](https://www.geeksforgeeks.org/problems/factorial5739/1)
 - [Reverse an array](https://www.geeksforgeeks.org/problems/reverse-an-array/1)
+- [Fibonacci Number](https://www.geeksforgeeks.org/problems/nth-fibonacci-number1335/1)
