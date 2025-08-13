@@ -8,3 +8,4 @@
 - [Search Insert Position](https://leetcode.com/problems/search-insert-position/description/)
 - [Floor in a Sorted Array](https://www.geeksforgeeks.org/problems/floor-in-a-sorted-array-1587115620/1)
 - [Ceil in a Sorted Array](https://www.geeksforgeeks.org/problems/ceil-in-a-sorted-array/1)
+- [Number of occurrence](https://www.geeksforgeeks.org/problems/number-of-occurrence2259/1)
