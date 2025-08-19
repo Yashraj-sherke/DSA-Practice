@@ -10,3 +10,4 @@
 - [Ceil in a Sorted Array](https://www.geeksforgeeks.org/problems/ceil-in-a-sorted-array/1)
 - [Number of occurrence](https://www.geeksforgeeks.org/problems/number-of-occurrence2259/1)
 - [ Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/description/)
+- [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/)
