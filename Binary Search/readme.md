@@ -14,3 +14,6 @@
 - [ Search Insert Position](https://leetcode.com/problems/search-insert-position/description/?envType=problem-list-v2&envId=binary-search)
 - [Sqrt(x)](https://leetcode.com/problems/sqrtx/description/)
 - [First Bad Version](https://leetcode.com/problems/first-bad-version/description/?envType=problem-list-v2&envId=binary-search)
+
+## Medium level
+- [Square Root](https://www.geeksforgeeks.org/problems/square-root/1)
