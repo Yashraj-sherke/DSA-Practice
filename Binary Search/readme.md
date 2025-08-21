@@ -20,4 +20,4 @@
 - [Find the Nth root of a number using binary search](#)
 - [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/description/)
 - [Minimum Number of Days to Make m Bouquets](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/description/)
-- []()
+- [Find the Smallest Divisor Given a Threshold](https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/description/)
