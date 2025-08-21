@@ -17,3 +17,7 @@
 
 ## Medium level
 - [Square Root](https://www.geeksforgeeks.org/problems/square-root/1)
+- [Find the Nth root of a number using binary search](#)
+- [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/description/)
+- [Minimum Number of Days to Make m Bouquets](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/description/)
+- []()
