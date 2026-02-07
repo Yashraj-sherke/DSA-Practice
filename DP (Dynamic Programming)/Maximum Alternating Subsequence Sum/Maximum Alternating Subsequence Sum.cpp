@@ -31,3 +31,29 @@ public:
         return solve(0, nums, true);
     }
 };
+
+// Bottom Up Approch
+
+class Solution {
+public:
+    long long maxAlternatingSum(vector<int>& nums) {
+
+        int n = nums.size();
+
+        vector<vector<long long>> dp(n+1, vector<long long>(2, 0));
+
+        for(int i = 1; i <= n; i++) {
+
+            // Even (+)
+            dp[i][0] = max(dp[i-1][0],
+                           dp[i-1][1] + nums[i-1]);
+
+            // Odd (-)
+            dp[i][1] = max(dp[i-1][1],
+                           dp[i-1][0] - nums[i-1]);
+        }
+
+        return dp[n][0];
+    }
+};
+
