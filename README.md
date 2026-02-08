@@ -162,8 +162,6 @@ A curated list of important Data Structures & Algorithms problems with brief exp
 6. [Graphs](#graphs)
 7. [Dynamic Programming](#dynamic-programming)
 8. [Greedy Algorithms](#greedy-algorithms)
-9. [Miscellaneous](#miscellaneous)
-
 ---
 
 ## Arrays
