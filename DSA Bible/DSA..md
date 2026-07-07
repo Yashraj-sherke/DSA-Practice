@@ -1,8 +1,6 @@
 # 🧠 THE DSA BIBLE — C++ Implementation Handbook for Interviews & Competitive Programming
 
-> **Status:** Living document, built in parts. This is **Part 1 of N**.
-> Covered so far: C++ Basics → Loops → STL Core Containers (vector, pair, tuple, stack, queue, priority_queue, set family, map family).
-> Remaining topics (Algorithms Library, Bit Manipulation, Prefix Sum, Sliding Window, Two Pointer, Binary Search, Sorting, Linked List, Monotonic Stack/Queue, Heap, Hashing, Strings, Trie, Recursion, Backtracking, Greedy, Trees, BST, Binary Lifting, Graphs, Union Find, Topo Sort, Shortest Path, MST, DP, Segment Tree, Fenwick Tree, Sparse Table, Math, Number Theory, Geometry, Game Theory, Advanced DS, CP Tricks) will be appended in the next parts — say "continue" and I'll keep building.
+> **Status: ✅ Complete.** All 42 sections built: C++ Basics, Loops, STL Complete, Algorithms Library, Bit Manipulation, Prefix Sum, Difference Array, Sliding Window, Two Pointer, Binary Search, Sorting, Linked List, Stack/Queue/Deque, Monotonic Stack, Monotonic Queue, Heap, Hashing, String Algorithms, Trie, Recursion, Backtracking, Greedy, Trees, BST, Binary Lifting, Graphs, Union Find, Topological Sort, Shortest Path, MST, Dynamic Programming, Segment Tree, Fenwick Tree, Sparse Table, Math, Number Theory, Geometry, Game Theory, Advanced Data Structures, and Competitive Programming Tricks.
 
 This is **not a tutorial**. Theory is kept to 2–5 lines. Everything else is implementation: syntax, complexities, edge cases, templates, dry runs, and contest tricks you can copy-paste under time pressure.
 
@@ -2561,4 +2559,821 @@ long long primMST(int src, int n, vector<vector<pair<int,int>>>& adj) {
 
 ---
 
-*End of Part 5. Next (Part 6): Dynamic Programming (the biggest section — 1D/2D DP, knapsack family, LCS/LIS, DP on trees/bitmask), Segment Tree, Fenwick Tree, Sparse Table. Say "continue" to keep going.*
+*End of Part 5.*
+
+---
+
+## 33. Dynamic Programming
+
+**Concept:** Break a problem into overlapping subproblems, solve each once, store the result (memoize), and reuse. Requires **optimal substructure** (optimal solution built from optimal sub-solutions) and **overlapping subproblems** (naive recursion repeats work).
+
+### 33.1 Top-Down (Memoization) vs Bottom-Up (Tabulation)
+
+```cpp
+// Top-down: Fibonacci with memoization
+vector<int> memo(50, -1);
+int fibMemo(int n) {
+    if (n <= 1) return n;
+    if (memo[n] != -1) return memo[n];
+    return memo[n] = fibMemo(n-1) + fibMemo(n-2);
+}
+
+// Bottom-up: Fibonacci with tabulation
+int fibTab(int n) {
+    vector<int> dp(n+1);
+    dp[0] = 0; if (n >= 1) dp[1] = 1;
+    for (int i = 2; i <= n; i++) dp[i] = dp[i-1] + dp[i-2];
+    return dp[n];
+}
+
+// Space-optimized (O(1) space) — most CP judges reward this
+int fibOptimized(int n) {
+    if (n <= 1) return n;
+    int prev2 = 0, prev1 = 1;
+    for (int i = 2; i <= n; i++) {
+        int cur = prev1 + prev2;
+        prev2 = prev1; prev1 = cur;
+    }
+    return prev1;
+}
+```
+
+### 33.2 0/1 Knapsack (the DP archetype)
+
+```cpp
+int knapsack01(vector<int>& weights, vector<int>& values, int capacity) {
+    int n = weights.size();
+    vector<vector<int>> dp(n+1, vector<int>(capacity+1, 0));
+    for (int i = 1; i <= n; i++) {
+        for (int w = 0; w <= capacity; w++) {
+            dp[i][w] = dp[i-1][w];                                     // don't take item i
+            if (weights[i-1] <= w)
+                dp[i][w] = max(dp[i][w], dp[i-1][w-weights[i-1]] + values[i-1]); // take item i
+        }
+    }
+    return dp[n][capacity];
+}
+
+// Space-optimized 1D version — iterate weight DESCENDING to avoid reusing item within same row
+int knapsack01Optimized(vector<int>& weights, vector<int>& values, int capacity) {
+    int n = weights.size();
+    vector<int> dp(capacity+1, 0);
+    for (int i = 0; i < n; i++)
+        for (int w = capacity; w >= weights[i]; w--)   // MUST go descending for 0/1 knapsack
+            dp[w] = max(dp[w], dp[w-weights[i]] + values[i]);
+    return dp[capacity];
+}
+```
+
+**Dry Run — items {w:1,v:1},{w:3,v:4},{w:4,v:5}, capacity=4:**
+```
+dp table (rows=items 0..3, cols=weight 0..4), row0 all zero:
+Row1 (item w1=1,v1=1): dp[1][0..4] = [0,1,1,1,1]
+Row2 (item w2=3,v2=4): dp[2][0]=0,[1]=1,[2]=1,[3]=max(1,4)=4,[4]=max(1,4+1)=5
+Row3 (item w3=4,v3=5): dp[3][4]=max(dp[2][4]=5, dp[2][0]+5=5) = 5
+Final answer dp[3][4] = 5 (take item1(w1,v1) + item2(w3,v4) = weight 4, value 5)
+```
+
+### 33.3 Longest Common Subsequence (LCS)
+
+```cpp
+int lcs(string& a, string& b) {
+    int n = a.size(), m = b.size();
+    vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= m; j++)
+            dp[i][j] = (a[i-1] == b[j-1]) ? dp[i-1][j-1] + 1 : max(dp[i-1][j], dp[i][j-1]);
+    return dp[n][m];
+}
+```
+
+### 33.4 Longest Increasing Subsequence (LIS) — O(n log n) via binary search
+
+```cpp
+int lengthOfLIS(vector<int>& nums) {
+    vector<int> tails;  // tails[i] = smallest possible tail value of an increasing subsequence of length i+1
+    for (int x : nums) {
+        auto it = lower_bound(tails.begin(), tails.end(), x);
+        if (it == tails.end()) tails.push_back(x);
+        else *it = x;
+    }
+    return tails.size();
+}
+// NOTE: `tails` itself is NOT the actual LIS sequence — only its length is guaranteed correct.
+```
+
+**Dry Run — LIS of [10,9,2,5,3,7,101,18]:**
+```
+x=10: tails=[10]
+x=9:  lower_bound(10)->idx0, replace: tails=[9]
+x=2:  replace idx0: tails=[2]
+x=5:  5>2, append: tails=[2,5]
+x=3:  lower_bound(5)->idx1, replace: tails=[2,3]
+x=7:  7>3, append: tails=[2,3,7]
+x=101: append: tails=[2,3,7,101]
+x=18: lower_bound(101)->idx3, replace: tails=[2,3,7,18]
+Final length = 4 (actual LIS: [2,3,7,101] or [2,3,7,18], length 4)
+```
+
+### 33.5 Coin Change (min coins & count ways — two DIFFERENT DP formulations)
+
+```cpp
+// Minimum coins to make amount (unbounded knapsack style)
+int coinChangeMin(vector<int>& coins, int amount) {
+    vector<int> dp(amount+1, INT_MAX);
+    dp[0] = 0;
+    for (int a = 1; a <= amount; a++)
+        for (int c : coins)
+            if (c <= a && dp[a-c] != INT_MAX)
+                dp[a] = min(dp[a], dp[a-c] + 1);
+    return dp[amount] == INT_MAX ? -1 : dp[amount];
+}
+
+// Count number of ways to make amount (order doesn't matter — combinations)
+int coinChangeWays(vector<int>& coins, int amount) {
+    vector<long long> dp(amount+1, 0);
+    dp[0] = 1;
+    for (int c : coins)                          // coin OUTER loop = combinations (not permutations)
+        for (int a = c; a <= amount; a++)
+            dp[a] += dp[a-c];
+    return dp[amount];
+}
+```
+
+### 33.6 DP on Trees (e.g., House Robber III / max independent set on tree)
+
+```cpp
+// Return {maxIfNotRobbed, maxIfRobbed} for subtree rooted at node
+pair<int,int> robTree(TreeNode* node) {
+    if (!node) return {0, 0};
+    auto [lNotRob, lRob] = robTree(node->left);
+    auto [rNotRob, rRob] = robTree(node->right);
+    int notRobbed = max(lNotRob, lRob) + max(rNotRob, rRob);   // node skipped, children free choice
+    int robbed = node->val + lNotRob + rNotRob;                  // node taken, children MUST be skipped
+    return {notRobbed, robbed};
+}
+int rob(TreeNode* root) {
+    auto [notRob, rob_] = robTree(root);
+    return max(notRob, rob_);
+}
+```
+
+### 33.7 Bitmask DP (Traveling Salesman Problem template)
+
+```cpp
+// TSP — minimum cost to visit all cities starting from city 0
+int tsp(vector<vector<int>>& dist, int n) {
+    vector<vector<int>> dp(1<<n, vector<int>(n, INT_MAX));
+    dp[1][0] = 0;   // mask=1 (only city 0 visited), currently at city 0
+    for (int mask = 1; mask < (1<<n); mask++) {
+        for (int u = 0; u < n; u++) {
+            if (!(mask & (1<<u)) || dp[mask][u] == INT_MAX) continue;
+            for (int v = 0; v < n; v++) {
+                if (mask & (1<<v)) continue;               // already visited
+                int newMask = mask | (1<<v);
+                dp[newMask][v] = min(dp[newMask][v], dp[mask][u] + dist[u][v]);
+            }
+        }
+    }
+    int best = INT_MAX;
+    for (int u = 1; u < n; u++)
+        if (dp[(1<<n)-1][u] != INT_MAX)
+            best = min(best, dp[(1<<n)-1][u] + dist[u][0]);  // return to city 0
+    return best;
+}
+```
+
+**Common Mistakes:**
+- 0/1 Knapsack space optimization: iterating weight **ascending** instead of **descending** in the 1D version → reuses the same item multiple times (turns it into unbounded knapsack by accident).
+- LCS: off-by-one between string index (`0`-based) and DP index (`1`-based, offset by 1) — always `a[i-1]`, `b[j-1]` when `dp` is sized `(n+1)x(m+1)`.
+- LIS O(n log n): assuming the `tails` array IS the actual longest subsequence — it's only guaranteed to have the correct **length**, not the correct **elements** (reconstructing the actual sequence needs extra parent-pointer bookkeeping).
+- Coin change "count ways": **loop order matters** — coin-outer/amount-inner counts combinations (order doesn't matter); amount-outer/coin-inner counts permutations (order matters) — this single swap is one of the most common DP interview trick questions.
+- Forgetting `long long` for DP tables where values can overflow `int` (e.g., counting large combinatorial ways).
+- Bitmask DP: `n > ~20` makes `2^n` states infeasible — recognize the input constraint signal (`n ≤ 20`) as a strong hint toward bitmask DP specifically.
+
+**Interview Tip:** For any DP problem, always state explicitly: (1) what does `dp[i]` (or `dp[i][j]`) represent, (2) the recurrence/transition, (3) the base case, (4) the final answer's location. This structure alone often satisfies 80% of interviewer expectations even before code.
+
+---
+
+## 34. Segment Tree
+
+**Concept:** A binary tree over an array supporting O(log n) range queries (sum/min/max) AND O(log n) point/range updates — the go-to structure when both updates and queries are needed (unlike prefix sum, which only handles static arrays).
+
+```cpp
+class SegmentTree {
+    vector<long long> tree;
+    int n;
+public:
+    SegmentTree(vector<int>& arr) {
+        n = arr.size();
+        tree.assign(4*n, 0);
+        build(arr, 1, 0, n-1);
+    }
+    void build(vector<int>& arr, int node, int start, int end) {
+        if (start == end) { tree[node] = arr[start]; return; }
+        int mid = (start+end)/2;
+        build(arr, 2*node, start, mid);
+        build(arr, 2*node+1, mid+1, end);
+        tree[node] = tree[2*node] + tree[2*node+1];   // change op for min/max
+    }
+    void update(int node, int start, int end, int idx, int val) {
+        if (start == end) { tree[node] = val; return; }
+        int mid = (start+end)/2;
+        if (idx <= mid) update(2*node, start, mid, idx, val);
+        else update(2*node+1, mid+1, end, idx, val);
+        tree[node] = tree[2*node] + tree[2*node+1];
+    }
+    long long query(int node, int start, int end, int l, int r) {
+        if (r < start || end < l) return 0;              // no overlap (identity for sum; use INF/-INF for min/max)
+        if (l <= start && end <= r) return tree[node];    // total overlap
+        int mid = (start+end)/2;
+        return query(2*node, start, mid, l, r) + query(2*node+1, mid+1, end, l, r); // partial overlap
+    }
+    // Public wrappers
+    void update(int idx, int val) { update(1, 0, n-1, idx, val); }
+    long long query(int l, int r) { return query(1, 0, n-1, l, r); }
+};
+```
+
+**Dry Run — build on arr=[1,3,5,7], query(1,2):**
+```
+Tree structure (1-indexed node numbering):
+node1 [0,3] = 16
+  node2 [0,1] = 4          node3 [2,3] = 12
+   node4[0,0]=1  node5[1,1]=3   node6[2,2]=5  node7[3,3]=7
+
+query(1,2): node1[0,3] partial overlap with [1,2] -> recurse
+  node2[0,1] partial overlap -> recurse
+    node4[0,0]: r=0 < l=1, NO overlap, return 0
+    node5[1,1]: fully inside [1,2], return 3
+    node2 returns 0+3=3
+  node3[2,3] partial overlap -> recurse
+    node6[2,2]: fully inside [1,2], return 5
+    node7[3,3]: start=3 > r=2, NO overlap, return 0
+    node3 returns 5+0=5
+  Total = 3+5 = 8  (arr[1]+arr[2] = 3+5 = 8) ✓
+```
+
+**Common Mistakes:**
+- Sizing the `tree` array as `4*n` — this is a safe upper bound; using exactly `2*n` or `n` can cause out-of-bounds writes for non-power-of-2 sizes.
+- Wrong "no overlap" identity value: use `0` for sum queries, `LLONG_MAX` for min queries, `LLONG_MIN` for max queries — using the wrong identity silently corrupts results.
+- Off-by-one in range boundaries: `l <= start && end <= r` (full overlap) vs `r < start || end < l` (no overlap) — easy to flip `<` and `<=` incorrectly.
+- Forgetting **lazy propagation** for range updates (update an entire range, not just a point) — without it, range updates degrade to O(n log n) per update instead of O(log n); lazy propagation is the standard fix (adds a `lazy[]` array and defers pushing updates down until needed).
+
+**CP Trick:** Segment trees generalize far beyond sum/min/max — GCD segment trees, "count of elements in range satisfying condition X", and merge-sort-tree (segment tree where each node stores a sorted vector) are common advanced variants.
+
+---
+
+## 35. Fenwick Tree (Binary Indexed Tree / BIT)
+
+**Concept:** A more compact, simpler-to-code alternative to Segment Tree for **prefix sum** queries + point updates — O(log n) both, but with much less code and a smaller constant factor.
+
+```cpp
+class FenwickTree {
+    vector<long long> tree;
+    int n;
+public:
+    FenwickTree(int size) : n(size), tree(size+1, 0) {}
+
+    void update(int idx, long long delta) {          // idx is 1-indexed
+        for (; idx <= n; idx += idx & (-idx))
+            tree[idx] += delta;
+    }
+    long long query(int idx) {                          // prefix sum [1..idx]
+        long long sum = 0;
+        for (; idx > 0; idx -= idx & (-idx))
+            sum += tree[idx];
+        return sum;
+    }
+    long long rangeQuery(int l, int r) {                // sum [l..r] inclusive, 1-indexed
+        return query(r) - query(l-1);
+    }
+};
+```
+
+**Dry Run — update(3, 5) then query(4), on n=5:**
+```
+update(3, 5): idx=3 (binary 011)
+  tree[3] += 5
+  idx += (3 & -3) = 3+1 = 4 -> tree[4] += 5
+  idx += (4 & -4) = 4+4 = 8 > n=5, stop
+So tree[3] and tree[4] both increased by 5.
+
+query(4): idx=4 (binary 100)
+  sum += tree[4] (includes the +5)
+  idx -= (4 & -4) = 4-4 = 0, stop
+Result includes the update since 3 <= 4. ✓
+```
+
+**Common Mistakes:**
+- **1-indexing is mandatory** — Fenwick Tree relies on `idx & (-idx)` (lowest set bit) arithmetic, which breaks at index 0. Always convert 0-indexed problems to 1-indexed before use.
+- Confusing `update` (adds a **delta**, not sets an absolute value) — to "set" index `i` to value `v`, first query the current value and update with `v - current`.
+- Range update + range query (not just point update + range query) requires a **different** Fenwick construction (two BITs, or a BIT-of-differences trick) — the basic version above only supports point update + range query.
+- Off-by-one converting between 0-indexed array and 1-indexed Fenwick Tree — a very common silent bug.
+
+**Interview Tip:** Fenwick Tree is less commonly asked in software engineering interviews than Segment Tree conceptually, but "range sum query - mutable" (LeetCode 307) is a well-known problem solvable cleanly with either structure — Fenwick Tree is the more concise answer if asked to code it live.
+
+---
+
+## 36. Sparse Table
+
+**Concept:** O(n log n) preprocessing, O(1) query for **idempotent** range operations (min, max, GCD, AND, OR) — but does NOT support updates (static array only) and does NOT work for sum (not idempotent — overlapping ranges would double-count).
+
+```cpp
+class SparseTable {
+    vector<vector<int>> table;
+    vector<int> logTable;
+public:
+    SparseTable(vector<int>& arr) {
+        int n = arr.size();
+        int LOG = log2(n) + 1;
+        table.assign(LOG, vector<int>(n));
+        logTable.assign(n+1, 0);
+        for (int i = 2; i <= n; i++) logTable[i] = logTable[i/2] + 1;
+
+        table[0] = arr;
+        for (int k = 1; k < LOG; k++)
+            for (int i = 0; i + (1<<k) <= n; i++)
+                table[k][i] = min(table[k-1][i], table[k-1][i + (1<<(k-1))]); // min example
+
+    }
+    int queryMin(int l, int r) {  // inclusive, 0-indexed
+        int k = logTable[r-l+1];
+        return min(table[k][l], table[k][r - (1<<k) + 1]);
+    }
+};
+```
+
+**Dry Run — arr=[2,4,3,1,5], query min(1,3):**
+```
+table[0] = [2,4,3,1,5]  (k=0, ranges of length 1)
+table[1][i] = min(arr[i], arr[i+1]) for length-2 ranges:
+  table[1] = [2,3,1,1] (min(2,4)=2, min(4,3)=3, min(3,1)=1, min(1,5)=1)
+table[2][i] = min over length-4 ranges:
+  table[2] = [1] (min of table[1][0] and table[1][2] = min(2,1)=1)
+
+queryMin(1,3): length=3, k=logTable[3]=1 (2^1=2 <= 3)
+  = min(table[1][1], table[1][3-2+1=2]) = min(3, 1) = 1
+  Check manually: arr[1..3] = [4,3,1], min=1 ✓
+```
+
+**Common Mistakes:**
+- Using Sparse Table for **sum** queries — the "overlap trick" (`table[k][l]` and `table[k][r-2^k+1]` overlapping) works for idempotent operations only; summing double-counts the overlapping region and gives a wrong answer.
+- Attempting to update the array after building the Sparse Table — it's fundamentally a **static** structure. Use Segment Tree instead if updates are needed.
+- Off-by-one in `logTable` precomputation or in the overlap-query formula `r - (1<<k) + 1` — verify with a small dry run before trusting it in a contest.
+
+**When to choose which range-query structure:**
+
+| Need | Structure |
+|---|---|
+| Static array, idempotent op (min/max/gcd), O(1) query | Sparse Table |
+| Updates needed, any associative op (sum/min/max) | Segment Tree |
+| Updates needed, prefix-sum-style only, want less code | Fenwick Tree |
+| No updates, sum only | Prefix Sum |
+
+---
+
+*End of Part 6.*
+
+---
+
+## 37. Math
+
+### 37.1 Modular Arithmetic
+
+**Concept:** Since answers are often huge, problems require results `mod 10^9+7` (or similar). Modular arithmetic rules let you take mod at each step instead of computing the full (overflowing) value.
+
+```cpp
+const long long MOD = 1e9+7;
+
+long long addMod(long long a, long long b) { return ((a%MOD) + (b%MOD)) % MOD; }
+long long subMod(long long a, long long b) { return ((a%MOD) - (b%MOD) + MOD) % MOD; } // +MOD guards negativity
+long long mulMod(long long a, long long b) { return ((a%MOD) * (b%MOD)) % MOD; }
+
+// Modular inverse (needed for division under modulo) — requires MOD to be PRIME
+long long power(long long base, long long exp, long long mod) {
+    long long res = 1; base %= mod;
+    while (exp > 0) {
+        if (exp & 1) res = res * base % mod;
+        base = base * base % mod;
+        exp >>= 1;
+    }
+    return res;
+}
+long long modInverse(long long a, long long mod) {
+    return power(a, mod-2, mod);   // Fermat's Little Theorem: a^(mod-2) ≡ a^-1 (mod prime)
+}
+long long divMod(long long a, long long b, long long mod) {
+    return mulMod(a, modInverse(b, mod));
+}
+```
+
+**Common Mistakes:**
+- Forgetting `+ MOD` before the final `% MOD` in subtraction — C++'s `%` can return negative results when the left operand is negative.
+- Using Fermat's Little Theorem inverse (`a^(mod-2)`) when `mod` is **not prime** — invalid; must use Extended Euclidean Algorithm instead for non-prime moduli.
+- Multiplying two numbers close to `10^9` each without modding first → `long long` overflow (product can exceed `9.2×10^18` if both factors are ~`10^9` after already being reduced insufficiently — always mod BEFORE multiplying, not after).
+
+### 37.2 Combinatorics — nCr, nPr, Factorials mod p
+
+```cpp
+const int MAXN = 200005;
+vector<long long> fact(MAXN), invFact(MAXN);
+
+void precomputeFactorials() {
+    fact[0] = 1;
+    for (int i = 1; i < MAXN; i++) fact[i] = fact[i-1] * i % MOD;
+    invFact[MAXN-1] = modInverse(fact[MAXN-1], MOD);
+    for (int i = MAXN-2; i >= 0; i--) invFact[i] = invFact[i+1] * (i+1) % MOD;
+}
+
+long long nCr(int n, int r) {
+    if (r < 0 || r > n) return 0;
+    return fact[n] * invFact[r] % MOD * invFact[n-r] % MOD;
+}
+```
+
+**Common Mistake:** Computing `invFact` by inverting each factorial individually (`modInverse(fact[i])` for every `i`) is O(n log(mod)) — the reverse-recurrence shown above computes ALL inverse factorials in O(n) total after just ONE modular inverse call. A frequently missed optimization under contest time pressure.
+
+---
+
+## 38. Number Theory
+
+### 38.1 Sieve of Eratosthenes (all primes up to N)
+
+```cpp
+vector<bool> sieve(int n) {
+    vector<bool> isPrime(n+1, true);
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; (long long)i*i <= n; i++)
+        if (isPrime[i])
+            for (int j = i*i; j <= n; j += i)
+                isPrime[j] = false;
+    return isPrime;
+}
+```
+
+### 38.2 Prime Factorization (single number, O(sqrt(n)))
+
+```cpp
+vector<pair<int,int>> primeFactorize(int n) {   // returns {prime, exponent} pairs
+    vector<pair<int,int>> factors;
+    for (int p = 2; (long long)p*p <= n; p++) {
+        if (n % p == 0) {
+            int cnt = 0;
+            while (n % p == 0) { n /= p; cnt++; }
+            factors.push_back({p, cnt});
+        }
+    }
+    if (n > 1) factors.push_back({n, 1});   // remaining n is itself a prime factor
+    return factors;
+}
+```
+
+### 38.3 GCD / LCM / Extended Euclidean
+
+```cpp
+long long gcdRec(long long a, long long b) { return b == 0 ? a : gcdRec(b, a%b); }
+long long lcmCalc(long long a, long long b) { return a / gcdRec(a,b) * b; }  // divide first to avoid overflow
+
+// Extended Euclidean: finds x, y such that a*x + b*y = gcd(a,b)
+long long extGcd(long long a, long long b, long long &x, long long &y) {
+    if (b == 0) { x = 1; y = 0; return a; }
+    long long x1, y1;
+    long long g = extGcd(b, a%b, x1, y1);
+    x = y1; y = x1 - (a/b)*y1;
+    return g;
+}
+```
+
+### 38.4 Modular Exponentiation & Fast Power — already shown in 37.1
+
+**Common Mistakes:**
+- Sieve upper bound `i*i <= n` written as `int i*i` overflows for `n` near `INT_MAX` — cast to `long long` in the comparison.
+- Prime factorization: forgetting the final `if (n > 1)` check — if after the loop `n` is still `>1`, that remaining value IS a prime factor (happens when `n` has one large prime factor greater than sqrt of original n).
+- `lcm(a,b) = a*b/gcd(a,b)` computed as `(a*b)/gcd(a,b)` risks intermediate overflow — always divide first: `(a/gcd(a,b))*b`.
+- Sieve is O(n log log n) — for `n > 10^7`, memory (not time) often becomes the bottleneck; use a bitset-based sieve or segmented sieve for very large ranges.
+
+---
+
+## 39. Geometry
+
+### 39.1 Basic Point/Vector Operations
+
+```cpp
+struct Point { double x, y; };
+
+double dist(Point a, Point b) { return sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y)); }
+
+// Cross product — sign tells you the turn direction (CCW/CW/collinear)
+double cross(Point O, Point A, Point B) {
+    return (A.x-O.x)*(B.y-O.y) - (A.y-O.y)*(B.x-O.x);
+}
+// cross > 0: counter-clockwise turn (A->B turns left)
+// cross < 0: clockwise turn (A->B turns right)
+// cross == 0: collinear
+```
+
+### 39.2 Polygon Area (Shoelace Formula)
+
+```cpp
+double polygonArea(vector<Point>& poly) {
+    double area = 0;
+    int n = poly.size();
+    for (int i = 0; i < n; i++) {
+        int j = (i+1) % n;
+        area += poly[i].x * poly[j].y - poly[j].x * poly[i].y;
+    }
+    return abs(area) / 2.0;
+}
+```
+
+### 39.3 Convex Hull (Graham Scan / Andrew's Monotone Chain)
+
+```cpp
+vector<Point> convexHull(vector<Point> points) {
+    int n = points.size(), k = 0;
+    if (n < 3) return points;
+    sort(points.begin(), points.end(), [](Point a, Point b) {
+        return a.x < b.x || (a.x == b.x && a.y < b.y);
+    });
+    vector<Point> hull(2*n);
+    // Build lower hull
+    for (int i = 0; i < n; i++) {
+        while (k >= 2 && cross(hull[k-2], hull[k-1], points[i]) <= 0) k--;
+        hull[k++] = points[i];
+    }
+    // Build upper hull
+    for (int i = n-2, t = k+1; i >= 0; i--) {
+        while (k >= t && cross(hull[k-2], hull[k-1], points[i]) <= 0) k--;
+        hull[k++] = points[i];
+    }
+    hull.resize(k-1);
+    return hull;
+}
+```
+
+**Common Mistakes:**
+- Floating point precision errors in geometry — always compare with an epsilon (`abs(a-b) < 1e-9`), never `==`, for double comparisons.
+- Cross product sign convention confusion — draw a quick example on paper before trusting the sign in a new context.
+- Shoelace formula: forgetting `abs()` — the raw sum can be negative depending on polygon winding order (clockwise vs counter-clockwise).
+- Convex Hull: forgetting to handle collinear points (`<= 0` vs `< 0` in the cross product check changes whether collinear boundary points are included).
+
+**Interview Tip:** Geometry is rare in typical SDE interviews but common in CP (especially Codeforces Div 2/3 problems) — if it does appear in an interview, it's usually simpler (distance, area, basic collision) without needing convex hull machinery.
+
+---
+
+## 40. Game Theory
+
+**Concept:** Analyze two-player games with perfect information for a winning/losing strategy — usually reduces to computing **Grundy numbers (nimbers)** or simple parity/pattern observations.
+
+### 40.1 Nim Game
+
+```cpp
+// Classic Nim: XOR of all pile sizes. Non-zero XOR = first player wins.
+bool firstPlayerWinsNim(vector<int>& piles) {
+    int xorSum = 0;
+    for (int p : piles) xorSum ^= p;
+    return xorSum != 0;
+}
+```
+
+### 40.2 Grundy Numbers (Sprague-Grundy Theorem)
+
+```cpp
+// Grundy number of a state = mex (minimum excludant) of Grundy numbers of reachable states
+int grundy[1000];
+int mex(vector<int>& reachable) {
+    set<int> s(reachable.begin(), reachable.end());
+    int m = 0;
+    while (s.count(m)) m++;
+    return m;
+}
+// Composite games: XOR the Grundy numbers of independent sub-games (Sprague-Grundy theorem)
+// A position is LOSING for the player to move iff its Grundy number is 0.
+```
+
+**Dry Run — mex({0,1,3}):**
+```
+Check 0: present -> skip
+Check 1: present -> skip
+Check 2: NOT present -> mex = 2
+```
+
+**Common Mistakes:**
+- Assuming every impartial game reduces to simple Nim — only true when the game literally IS Nim-like; general games need the full Grundy/mex computation.
+- Forgetting that Grundy number 0 means the position is **losing** for the player about to move (not winning) — a very common sign-flip mistake.
+- Base case: a position with no moves available has Grundy number 0 by definition (mex of empty set = 0).
+
+**Interview Tip:** Game theory questions in interviews are usually simpler pattern-based ones (e.g., "Nim Game" on LeetCode is literally `piles.size() % something` or single-pile parity) — full Grundy theory is more of a CP topic (Codeforces/ICPC) than a typical SDE interview topic.
+
+---
+
+## 41. Advanced Data Structures
+
+### 41.1 Disjoint Set Union with Rollback (for offline queries)
+
+Store the union operations on a stack; to "rollback," undo the last union by restoring `parent`/`rank` without path compression (path compression makes rollback harder, so DSU-with-rollback typically uses union by rank/size ONLY, no path compression).
+
+### 41.2 Persistent Segment Tree (version history queries)
+
+**Concept:** Each update creates a new "version" of the tree by only copying the O(log n) nodes on the path that changed, sharing the rest — enables querying any historical version in O(log n).
+
+```cpp
+struct Node { int val; Node *left, *right; };
+Node* build(vector<int>& arr, int start, int end) {
+    if (start == end) return new Node{arr[start], nullptr, nullptr};
+    int mid = (start+end)/2;
+    return new Node{0, build(arr,start,mid), build(arr,mid+1,end)};
+}
+Node* update(Node* prev, int start, int end, int idx, int val) {
+    if (start == end) return new Node{val, nullptr, nullptr};
+    int mid = (start+end)/2;
+    if (idx <= mid)
+        return new Node{0, update(prev->left, start, mid, idx, val), prev->right};
+    else
+        return new Node{0, prev->left, update(prev->right, mid+1, end, idx, val)};
+}
+```
+
+### 41.3 GNU PBDS Ordered Set (order-statistics tree)
+
+Covered in depth in Section 42.9 below (Policy-Based Data Structures).
+
+**Common Mistakes:**
+- Persistent segment tree: forgetting each `update` returns a **new root** — the old root remains valid and queryable (that's the entire point) but you must keep a `vector<Node*> versions` to track each one.
+- Memory: persistent structures leak nodes fast without a memory pool/arena allocator in long-running contest submissions with many updates — watch memory limits.
+
+---
+
+## 42. Competitive Programming Tricks
+
+### 42.1 Fast Input/Output Template
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define endl '\n'
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    // ... solve
+}
+```
+
+### 42.2 Coordinate Compression
+
+```cpp
+// Map large/sparse coordinate values to a small dense range [0, k) preserving relative order
+vector<int> compress(vector<int> arr) {
+    vector<int> sorted_ = arr;
+    sort(sorted_.begin(), sorted_.end());
+    sorted_.erase(unique(sorted_.begin(), sorted_.end()), sorted_.end());
+    for (int& x : arr)
+        x = lower_bound(sorted_.begin(), sorted_.end(), x) - sorted_.begin();
+    return arr;
+}
+```
+
+### 42.3 Meet in the Middle
+
+**Concept:** Split a problem of size `n` (too large for `2^n` brute force) into two halves of size `n/2`, brute-force each half (`2^(n/2)` each), then combine — turns O(2^n) into O(2^(n/2) · log(2^(n/2))).
+
+```cpp
+// Example: subset-sum feasibility for n up to ~40
+vector<long long> allSubsetSums(vector<int>& arr) {
+    int n = arr.size();
+    vector<long long> sums;
+    for (int mask = 0; mask < (1<<n); mask++) {
+        long long s = 0;
+        for (int i = 0; i < n; i++) if (mask & (1<<i)) s += arr[i];
+        sums.push_back(s);
+    }
+    return sums;
+}
+// Split arr into two halves, get allSubsetSums of each, sort one half,
+// binary search into it for each element of the other half to check target - sum feasibility.
+```
+
+### 42.4 Mo's Algorithm (offline range query batching)
+
+**Concept:** Reorder queries (sort by block of `left`, then by `right`) so that a two-pointer window can answer all offline range queries in O((n+q)·sqrt(n)) instead of O(n·q).
+
+```cpp
+int BLOCK;
+struct Query { int l, r, idx; };
+bool compareQuery(Query a, Query b) {
+    if (a.l/BLOCK != b.l/BLOCK) return a.l/BLOCK < b.l/BLOCK;
+    return (a.l/BLOCK & 1) ? a.r < b.r : a.r > b.r;  // alternate direction — reduces pointer movement
+}
+// Then: sort queries with compareQuery, maintain a sliding [curL, curR] window with
+// add(idx)/remove(idx) functions, moving pointers query-by-query and recording answers.
+```
+
+### 42.5 Randomized Algorithms (avoiding adversarial worst-case)
+
+```cpp
+// Randomized Quickselect pivot to avoid O(n^2) worst case on adversarial input
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+int randomPivotIdx(int l, int r) { return l + rng() % (r-l+1); }
+```
+
+### 42.6 Debug Template
+
+```cpp
+#ifdef LOCAL
+#define debug(x) cerr << #x << " = " << (x) << endl
+#else
+#define debug(x)
+#endif
+// Compile locally with -DLOCAL to see debug output; disappears automatically on judge submission.
+```
+
+### 42.7 ModInt Struct (wraps modular arithmetic into overloaded operators)
+
+```cpp
+struct ModInt {
+    long long val;
+    static const long long MOD = 1e9+7;
+    ModInt(long long v=0) { val = ((v % MOD) + MOD) % MOD; }
+    ModInt operator+(const ModInt& o) const { return ModInt(val + o.val); }
+    ModInt operator-(const ModInt& o) const { return ModInt(val - o.val); }
+    ModInt operator*(const ModInt& o) const { return ModInt(val * o.val % MOD); }
+    ModInt pow(long long e) const {
+        ModInt res(1), base(val);
+        while (e > 0) { if (e&1) res = res*base; base = base*base; e >>= 1; }
+        return res;
+    }
+    ModInt inv() const { return pow(MOD-2); }
+    ModInt operator/(const ModInt& o) const { return *this * o.inv(); }
+};
+```
+
+### 42.8 Matrix Exponentiation (for linear recurrences in O(log n))
+
+```cpp
+using Matrix = vector<vector<long long>>;
+const long long MOD = 1e9+7;
+
+Matrix matMul(Matrix& A, Matrix& B) {
+    int n = A.size(), m = B[0].size(), k = B.size();
+    Matrix C(n, vector<long long>(m, 0));
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            for (int p = 0; p < k; p++)
+                C[i][j] = (C[i][j] + A[i][p]*B[p][j]) % MOD;
+    return C;
+}
+Matrix matPow(Matrix M, long long e) {
+    int n = M.size();
+    Matrix result(n, vector<long long>(n, 0));
+    for (int i = 0; i < n; i++) result[i][i] = 1;   // identity matrix
+    while (e > 0) {
+        if (e & 1) result = matMul(result, M);
+        M = matMul(M, M);
+        e >>= 1;
+    }
+    return result;
+}
+// Example use: nth Fibonacci in O(log n) via matrix [[1,1],[1,0]]^n
+```
+
+### 42.9 GNU PBDS — Ordered Set / Ordered Map
+
+**Concept:** Non-standard but GCC-supported policy-based data structures giving `set`-like behavior PLUS O(log n) "find k-th smallest" and "count elements less than x" — capabilities `std::set` doesn't natively offer.
+
+```cpp
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+
+template<typename T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+ordered_set<int> os;
+os.insert(5); os.insert(1); os.insert(3);
+
+auto it = os.find_by_order(1);       // iterator to the 2nd smallest element (0-indexed) -> 3
+int rank = os.order_of_key(3);        // number of elements STRICTLY less than 3 -> 1
+
+// For a multiset-like ordered structure, use pair<T,int> with a unique second value as tiebreaker,
+// since GNU PBDS tree does not support duplicate keys directly.
+```
+
+**Common Mistakes:**
+- GNU PBDS headers/namespace are **non-standard** — work on GCC (Codeforces, most judges) but will NOT compile on judges using other compilers (some interview platforms, MSVC) — never rely on this in a general interview setting, only in GCC-based contest environments.
+- Forgetting `tree_order_statistics_node_update` policy parameter → `find_by_order`/`order_of_key` won't exist/compile.
+- Attempting to insert duplicate keys directly — the tree behaves like `std::set` (unique keys); the `pair<T,int>` trick with a unique tiebreaker is required for multiset-like behavior.
+
+---
+
+## 🎯 Closing Notes — How to Actually Use This Bible
+
+1. **Don't read linearly.** Use Ctrl+F / the table of contents to jump to the exact pattern you're stuck on.
+2. **Before any interview/contest**, skim Sections 5 (Bit Manipulation), 8-10 (Sliding Window/Two Pointer/Binary Search), and 33 (DP) — these four cover the highest density of asked questions.
+3. **Memorize the templates, not just the concepts** — under time pressure, having the exact loop bounds and off-by-one handling memorized (not re-derived) is the difference between a clean 15-minute solve and a buggy 45-minute one.
+4. **Every "Common Mistakes" section is a bug you WILL make at least once** — re-read them the week before a big interview/contest as a final check.
+5. Keep this file updated as you learn new tricks from contests — a living reference beats a static tutorial.
+
+**This README is complete: all 42 sections covered, C++17 throughout, implementation-first as requested.** If you want, I can now also generate a companion `Cheatsheet.md` (ultra-condensed, 1-2 pages, template-only, zero explanation) for print-and-glance use during an actual contest or interview — just say the word.
